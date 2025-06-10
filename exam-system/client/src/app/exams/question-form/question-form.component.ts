@@ -6,7 +6,7 @@ import { NgIf } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-question-form',
   templateUrl: './question-form.component.html',
@@ -17,7 +17,8 @@ import { MatSelectModule } from '@angular/material/select';
     NgIf,
     MatButtonModule,
     MatInputModule,
-    MatSelectModule
+    MatSelectModule,
+    CommonModule
   ]
 })
 export class QuestionFormComponent {

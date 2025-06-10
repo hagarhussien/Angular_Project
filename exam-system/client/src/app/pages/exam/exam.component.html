@@ -1,0 +1,40 @@
+<div *ngIf="exam" class="container py-4">
+  <div class="card shadow-lg mx-auto exam-card">
+    <div class="card-body p-4 p-md-5">
+      <h2 class="card-title text-center mb-4 fw-bold text-dark">{{ exam.title }}</h2>
+
+      <div class="alert alert-warning text-center py-2 mb-4 fs-5" role="alert">
+        Time remaining: <span class="fw-semibold">{{ formatTime() }}</span>
+      </div>
+
+      <div class="question-section mb-4">
+        <h4 class="text-primary mb-3">Question {{ currentQuestionIndex + 1 }} of {{ questions.length }}</h4>
+        <p class="fs-5 mb-4 text-dark">{{ questions[currentQuestionIndex].text }}</p>
+
+        <div class="options-list d-flex flex-column gap-3">
+          <div *ngFor="let option of questions[currentQuestionIndex]?.options; let i = index"
+               class="option-card p-3 rounded border border-2"
+               [ngClass]="{'border-primary bg-light-primary': selectedAnswers[currentQuestionIndex] === i}"
+               (click)="selectAnswer(i)">
+            {{ option.text }}
+          </div>
+        </div>
+      </div>
+
+      <div class="nav-buttons d-flex justify-content-center gap-2 flex-wrap mb-4">
+        <button *ngFor="let q of questions; let i = index"
+                class="btn btn-outline-secondary nav-btn px-3 py-2"
+                (click)="goToQuestion(i)"
+                [ngClass]="{'btn-primary text-white': i === currentQuestionIndex}">
+          {{ i + 1 }}
+        </button>
+      </div>
+
+      <div class="text-center">
+        <button class="btn btn-success btn-lg px-5 py-2" (click)="submitExam()">
+          Submit Exam
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

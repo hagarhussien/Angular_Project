@@ -5,7 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { NgIf, NgFor } from '@angular/common';
-
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-exam-list',
   templateUrl: './exam-list.component.html',
@@ -17,7 +17,8 @@ import { NgIf, NgFor } from '@angular/common';
     NgFor,
     MatTableModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    CommonModule
   ]
 })
 export class ExamListComponent {
