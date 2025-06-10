@@ -1,0 +1,23 @@
+<h2>Add Question</h2>
+<form (ngSubmit)="submit()">
+  <label>Question Text:</label>
+  <input [(ngModel)]="question.text" name="text" required><br>
+
+  <div *ngFor="let option of question.options; let i = index">
+    <label>Option {{i + 1}}:</label>
+    <input [(ngModel)]="question.options[i]" [name]="'option_' + i">
+    <button type="button" (click)="removeOption(i)" *ngIf="i > 1">🗑 Remove</button><br>
+  </div>
+
+  <button type="button" (click)="addOption()">+ Add Option</button><br><br>
+
+  <label>Correct Answer Index:</label>
+  <select [(ngModel)]="question.correctAnswerIndex" name="correctAnswerIndex">
+    <option *ngFor="let o of question.options; let i = index" [value]="i">
+      Option {{i + 1}}: {{o}}
+    </option>
+  </select><br><br>
+
+  <button type="submit">Add Question</button>
+  <button type="button" (click)="router.navigate(['/exams'])">Cancel</button>
+</form>
