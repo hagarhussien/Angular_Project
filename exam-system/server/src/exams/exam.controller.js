@@ -93,3 +93,24 @@ exports.getQuestionsByExam = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+exports.getQuestionById = async (req, res) => {
+  try {
+    const question = await Question.findById(req.params.questionId);
+    if (!question) return res.status(404).json({ message: 'Question not found' });
+    res.json(question);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Delete Question
+exports.deleteQuestion = async (req, res) => {
+  try {
+    const question = await Question.findByIdAndDelete(req.params.id);
+    if (!question) return res.status(404).json({ message: 'Question not found' });
+    res.json({ message: 'Question deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};

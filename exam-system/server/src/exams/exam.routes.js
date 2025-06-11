@@ -12,5 +12,6 @@ router.delete('/:id', examCtrl.deleteExam);
 // Question Routes
 router.post('/:examId/questions', examCtrl.addQuestion);
 router.get('/:examId/questions', examCtrl.getQuestionsByExam);
-
+router.get('/questions/:id', examCtrl.getQuestionById); 
+router.delete('/questions/:id', examCtrl.deleteQuestion);
 module.exports = router;

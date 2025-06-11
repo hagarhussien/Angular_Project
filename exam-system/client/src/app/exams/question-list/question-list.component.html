@@ -1,31 +1,83 @@
-<h2>Questions for Exam ID: {{ examId }}</h2>
-<a [routerLink]="'/add-question/' + examId" mat-raised-button color="primary">+ Add Question</a>
+<!-- question-list.component.html -->
+<mat-card class="question-list-card">
+  <mat-card-header>
+    <mat-card-title>
+      <mat-icon>question_answer</mat-icon>
+      Questions for Exam ID: {{ examId }}
+    </mat-card-title>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" [routerLink]="'/add-question/' + examId">
+        <mat-icon>add</mat-icon> Add Question
+      </button>
+      <button mat-stroked-button (click)="router.navigate(['/exams'])">
+        <mat-icon>arrow_back</mat-icon> Back to Exams
+      </button>
+    </mat-card-actions>
+  </mat-card-header>
 
-<table mat-table [dataSource]="questions" class="mat-elevation-z8" *ngIf="questions.length > 0; else emptyState">
+  <mat-card-content>
+    @if (isLoading) {
+      <div class="loading-spinner">
+        <mat-spinner diameter="50"></mat-spinner>
+      </div>
+    } @else {
+      <table mat-table [dataSource]="questions" class="mat-elevation-z8" *ngIf="questions.length > 0; else emptyState">
+        <!-- Question Text Column -->
+        <ng-container matColumnDef="text">
+          <th mat-header-cell *matHeaderCellDef>Question</th>
+          <td mat-cell *matCellDef="let q">{{ q.text }}</td>
+        </ng-container>
 
-  <!-- Question Text -->
-  <ng-container matColumnDef="text">
-    <th mat-header-cell *matHeaderCellDef>Question</th>
-    <td mat-cell *matCellDef="let q">{{ q.text }}</td>
-  </ng-container>
+        <!-- Options Column -->
+        <ng-container matColumnDef="options">
+          <th mat-header-cell *matHeaderCellDef>Options</th>
+          <td mat-cell *matCellDef="let q">
+            <mat-list dense>
+              @for (option of q.options; track option; let i = $index) {
+                <mat-list-item>
+                  <mat-icon mat-list-icon>
+                    @if (i === q.correctAnswerIndex) {
+                      <mat-icon color="primary">check_circle</mat-icon>
+                    } @else {
+                      <mat-icon>radio_button_unchecked</mat-icon>
+                    }
+                  </mat-icon>
+                  <div mat-line>{{ option }}</div>
+                </mat-list-item>
+              }
+            </mat-list>
+          </td>
+        </ng-container>
 
-  <!-- Options -->
-  <ng-container matColumnDef="options">
-    <th mat-header-cell *matHeaderCellDef>Options</th>
-    <td mat-cell *matCellDef="let q">
-      <ul>
-        <li *ngFor="let option of q.options; let i = index">
-          {{ option }} <strong *ngIf="i === q.correctAnswerIndex">(Correct)</strong>
-        </li>
-      </ul>
-    </td>
-  </ng-container>
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let q">
+            <div class="action-buttons">
+              <button mat-icon-button color="primary" (click)="editQuestion(q._id)" matTooltip="Edit">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" (click)="deleteQuestion(q._id)" matTooltip="Delete">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </td>
+        </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="['text', 'options']"></tr>
-  <tr mat-row *matRowDef="let row; columns: ['text', 'options'];"></tr>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    }
 
-</table>
-
-<ng-template #emptyState>
-  <p>No questions found for this exam.</p>
-</ng-template>
+    <ng-template #emptyState>
+      <div class="empty-state">
+        <mat-icon class="empty-icon">help_outline</mat-icon>
+        <h3>No Questions Found</h3>
+        <p>Add questions to this exam</p>
+        <button mat-raised-button color="primary" [routerLink]="'/add-question/' + examId">
+          <mat-icon>add</mat-icon> Add Question
+        </button>
+      </div>
+    </ng-template>
+  </mat-card-content>
+</mat-card>

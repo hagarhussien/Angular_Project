@@ -1,4 +1,52 @@
-form {
-  max-width: 600px;
-  margin: auto;
+/* question-form.component.css */
+.form-card {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+}
+
+.question-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.options-section {
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  padding: 1rem;
+}
+
+.options-section h3 {
+  margin-top: 0;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.option-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.option-field {
+  flex-grow: 1;
+}
+
+.add-option-btn {
+  margin-top: 0.5rem;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+mat-icon {
+  vertical-align: middle;
 }
