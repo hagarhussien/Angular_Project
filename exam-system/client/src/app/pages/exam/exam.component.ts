@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ExamService } from '../../services/exam.service';
+import { ExamService } from '../../exams/exam.service';
 import { Question } from '../../models/question.model';
 import { Exam } from '../../models/exam.model';
 import { ResultService } from '../../services/result.service';
@@ -32,24 +32,27 @@ export class ExamComponent implements OnInit {
 
   ngOnInit(): void {
     this.examId = this.route.snapshot.paramMap.get('id')!;
-    this.examService.getExamById(this.examId).subscribe({
-      next: (response: any) => {
-        console.log('Response:', response);
-        console.log('🔍 Exam Response:', JSON.stringify(response, null, 2));
 
-        this.exam = response.exam;
-        this.questions = this.exam.questions || [];
-        console.log('Questions:', this.questions);
-        if (this.questions.length > 0) {
-          this.selectedAnswers = new Array(this.questions.length).fill(-1);
-          this.timeLeft = this.exam.duration * 60;
-          this.startTimer();
-        } else {
-          console.warn('No questions available for this exam');
-        }
-      },
+    this.examService.getExam(this.examId).subscribe({
+      next: (response: any) => {
+  console.log('Full Response:', response);
+
+  this.exam = response.exam;
+  this.questions = response.questions || [];
+
+  console.log(' Questions:', this.questions);
+
+  if (this.questions.length > 0) {
+    this.selectedAnswers = new Array(this.questions.length).fill(-1);
+    this.timeLeft = this.exam.duration * 60;
+    this.startTimer();
+  } else {
+    console.warn(' No questions found for this exam.');
+  }
+}
+,
       error: (err) => {
-        console.error('Error fetching exam:', err);
+        console.error(' Error fetching exam:', err);
       },
     });
   }
@@ -74,20 +77,27 @@ export class ExamComponent implements OnInit {
 
   submitExam(): void {
     clearInterval(this.timerInterval);
+
     const answers = this.questions.map((q, i) => ({
       questionId: q._id,
       selectedOptionIndex: this.selectedAnswers[i],
     }));
 
     const result: ResultSubmit = {
-      studentId: '665a14...', 
+      studentId: '665a14...',
       examId: this.examId,
       answers,
     };
 
-    this.resultService.submitResult(result).subscribe((res) => {
-      alert(`Exam submitted successfully. Your score: ${res.score} out of ${res.total}`);
-      this.router.navigate(['/']);
+    this.resultService.submitResult(result).subscribe({
+      next: (res) => {
+        alert(`Exam submitted successfully. Your score: ${res.score} out of ${res.total}`);
+        this.router.navigate(['/']);
+      },
+      error: (err) => {
+        console.error(' Error submitting exam:', err);
+        alert('Something went wrong while submitting the exam.');
+      },
     });
   }
 

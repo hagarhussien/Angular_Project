@@ -51,11 +51,15 @@ exports.getExamById = async (req, res) => {
   try {
     const exam = await Exam.findById(req.params.id);
     if (!exam) return res.status(404).json({ message: 'Exam not found' });
-    res.json(exam);
+
+    const questions = await Question.find({ examId: exam._id });
+
+    res.json({ exam, questions });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
+
 
 // Update Exam
 exports.updateExam = async (req, res) => {

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ExamService } from '../../services/exam.service';
+import { ExamService } from '../../exams/exam.service';
 import { Exam } from '../../models/exam.model';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -16,7 +16,7 @@ export class DashboardComponent implements OnInit {
   constructor(private examService: ExamService, private router: Router) {}
 
   ngOnInit(): void {
-    this.examService.getAllExams().subscribe((data) => {
+    this.examService.getExams().subscribe((data) => {
       this.exams = data;
     });
   }

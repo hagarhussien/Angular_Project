@@ -17,7 +17,7 @@ mongoose.connect('mongodb://localhost:27017/examSystem')
 // Use exam routes
 app.use('/api/exams', examRoutes);
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

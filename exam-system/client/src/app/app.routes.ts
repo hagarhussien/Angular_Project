@@ -15,10 +15,15 @@ export const routes: Routes = [
   { path: 'questions/:examId', component: QuestionListComponent },
   { path: 'edit-question/:examId/:questionId', component: QuestionFormComponent },
   { path: 'add-question/:examId', component: QuestionFormComponent },
-  { path: '', redirectTo: '/exams', pathMatch: 'full' },
+
+  // { path: '', redirectTo: '/exams', pathMatch: 'full' },
   { path: '', component: DashboardComponent },
+
+
+
   { path: 'exam/:id', component: ExamComponent },
   { path: 'result/:studentId', component: ResultComponent }
+  
 ];
 
 

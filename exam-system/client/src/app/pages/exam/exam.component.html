@@ -1,7 +1,7 @@
 <div *ngIf="exam" class="container py-4">
   <div class="card shadow-lg mx-auto exam-card">
     <div class="card-body p-4 p-md-5">
-      <h2 class="card-title text-center mb-4 fw-bold text-dark">{{ exam.title }}</h2>
+      <h2 class="card-title text-center mb-4 fw-bold text-dark">{{ exam }}</h2>
 
       <div class="alert alert-warning text-center py-2 mb-4 fs-5" role="alert">
         Time remaining: <span class="fw-semibold">{{ formatTime() }}</span>
@@ -16,7 +16,7 @@
                class="option-card p-3 rounded border border-2"
                [ngClass]="{'border-primary bg-light-primary': selectedAnswers[currentQuestionIndex] === i}"
                (click)="selectAnswer(i)">
-            {{ option.text }}
+            {{ option }}
           </div>
         </div>
       </div>
