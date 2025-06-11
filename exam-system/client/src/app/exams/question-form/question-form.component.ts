@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -11,6 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ExamService } from '../exam.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgFor } from '@angular/common';
+
 
 @Component({
   selector: 'app-question-form',
@@ -22,10 +24,12 @@ import { NgFor } from '@angular/common';
     MatButtonModule,
     MatInputModule,
     MatSelectModule,
+
     MatCardModule,
     MatFormFieldModule,
     MatIconModule,
     NgFor
+
   ]
 })
 export class QuestionFormComponent {

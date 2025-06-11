@@ -5,6 +5,10 @@ import { ExamService } from '../exam.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
+
+import { NgIf, NgFor } from '@angular/common';
+import { CommonModule } from '@angular/common';
+
 import { MatCardModule } from '@angular/material/card';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -22,9 +26,13 @@ import { ConfirmDialogComponent } from '../../shared/confirm-dialog.component';
     MatTableModule,
     MatButtonModule,
     MatIconModule,
+
+    CommonModule
+
     MatCardModule,
     MatTooltipModule,
     MatProgressSpinnerModule
+
   ]
 })
 export class ExamListComponent {

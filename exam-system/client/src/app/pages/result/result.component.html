@@ -1,0 +1,17 @@
+<div *ngFor="let result of results" class="card p-3 mb-4">
+  <h3>Exam: {{ result.examId.title }}</h3>
+  <p>Score: {{ result.score }} out of {{ result.total }}</p>
+
+  <div *ngFor="let answer of result.answers" class="mb-2">
+    <p><strong>Question:</strong> {{ detailedQuestions[answer.questionId].text }}</p>
+    <p>
+      <strong>Your answer:</strong>
+      <span [ngClass]="{
+        'text-success': isCorrect(answer.questionId, answer.selectedOptionIndex),
+        'text-danger': !isCorrect(answer.questionId, answer.selectedOptionIndex)
+      }">
+        {{ getOptionText(answer.questionId, answer.selectedOptionIndex) }}
+      </span>
+    </p>
+  </div>
+</div>
