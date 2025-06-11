@@ -16,9 +16,6 @@ mongoose.connect('mongodb://localhost:27017/examSystem')
 
 // Use exam routes
 app.use('/api/exams', examRoutes);
-app.get('/ping', (req, res) => {
-  res.json({ message: 'Pong' });
-});
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

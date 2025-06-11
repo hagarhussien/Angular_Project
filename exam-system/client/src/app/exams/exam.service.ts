@@ -40,7 +40,20 @@ export class ExamService {
     return this.http.post<any>(`${this.apiUrl}/${examId}/questions`, question);
   }
 
+  getQuestion(questionId: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/questions/${questionId}`);
+  }
+
+  updateQuestion(questionId: string, question: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/questions/${questionId}`, question);
+  }
+
   deleteQuestion(questionId: string): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/questions/${questionId}`);
+    return this.http.delete(`${this.apiUrl}/questions/${questionId}`);
+  }
+
+  // Point Calculation
+  calculateTotalPoints(examId: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/${examId}/calculate-points`, { responseType: 'json' });
   }
 }

@@ -13,11 +13,10 @@ export const routes: Routes = [
   { path: 'exams/add', component: ExamFormComponent },
   { path: 'exams/edit/:id', component: ExamFormComponent },
   { path: 'questions/:examId', component: QuestionListComponent },
-
+  { path: 'edit-question/:examId/:questionId', component: QuestionFormComponent },
   { path: 'add-question/:examId', component: QuestionFormComponent },
   { path: '', redirectTo: '/exams', pathMatch: 'full' },
-      { path: 'edit-question/:examId/:questionId', component: QuestionFormComponent },
-   { path: '', component: DashboardComponent },
+  { path: '', component: DashboardComponent },
   { path: 'exam/:id', component: ExamComponent },
   { path: 'result/:studentId', component: ResultComponent }
 ];

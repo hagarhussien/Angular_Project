@@ -35,7 +35,7 @@ export class QuestionListComponent {
   examId: string;
   questions: any[] = [];
   isLoading = true;
-  displayedColumns: string[] = ['text', 'options', 'actions'];
+  displayedColumns: string[] = ['text', 'options', 'points', 'actions'];
 
   constructor(
     private route: ActivatedRoute,
@@ -44,6 +44,11 @@ export class QuestionListComponent {
     private snackBar: MatSnackBar,
     private dialog: MatDialog
   ) {
+    this.examId = this.route.snapshot.paramMap.get('examId')!;
+    this.loadQuestions();
+  }
+
+  ngOnInit() {
     this.examId = this.route.snapshot.paramMap.get('examId')!;
     this.loadQuestions();
   }
@@ -76,17 +81,18 @@ export class QuestionListComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.isLoading = true;
         this.examService.deleteQuestion(id).subscribe({
           next: () => {
             this.questions = this.questions.filter(q => q._id !== id);
             this.snackBar.open('Question deleted successfully', 'Close', { duration: 2000 });
-            this.isLoading = false;
+
+            // ✅ Recalculate total points for exam
+            this.examService.calculateTotalPoints(this.examId).subscribe(updatedExam => {
+              console.log('Updated exam:', updatedExam);
+            });
           },
-          error: (err) => {
-            console.error('Error deleting question:', err);
+          error: () => {
             this.snackBar.open('Failed to delete question', 'Close', { duration: 3000 });
-            this.isLoading = false;
           }
         });
       }

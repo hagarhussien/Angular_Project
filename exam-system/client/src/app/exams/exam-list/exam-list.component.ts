@@ -26,9 +26,7 @@ import { ConfirmDialogComponent } from '../../shared/confirm-dialog.component';
     MatTableModule,
     MatButtonModule,
     MatIconModule,
-
-    CommonModule
-
+    CommonModule,
     MatCardModule,
     MatTooltipModule,
     MatProgressSpinnerModule
@@ -43,7 +41,8 @@ export class ExamListComponent {
 
   exams: any[] = [];
   isLoading = true;
-  displayedColumns: string[] = ['title', 'description', 'duration', 'actions'];
+  displayedColumns: string[] = ['title', 'description', 'duration', 'totalPoints', 'actions'];
+  totalPoints: number = 0;
 
   ngOnInit() {
     this.loadExams();

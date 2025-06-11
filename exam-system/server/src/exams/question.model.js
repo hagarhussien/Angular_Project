@@ -8,7 +8,8 @@ const QuestionSchema = new mongoose.Schema({
   },
   text: { type: String, required: true },
   options: [{ type: String, required: true }],
-  correctAnswerIndex: { type: Number, required: true }
+  correctAnswerIndex: { type: Number, required: true },
+  points: { type: Number, default: 1 }
 }, {
   versionKey: false
 });

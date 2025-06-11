@@ -17,6 +17,25 @@ exports.createExam = async (req, res) => {
   }
 };
 
+// Calculate Total Points for Exam
+exports.calculateTotalPoints = async (req, res) => {
+  try {
+    const questions = await Question.find({ examId: req.params.examId });
+    const totalPoints = questions.reduce((sum, q) => sum + (q.points || 1), 0);
+
+    const updatedExam = await Exam.findByIdAndUpdate(
+      req.params.examId,
+      { totalPoints },
+      { new: true }
+    );
+
+    if (!updatedExam) return res.status(404).json({ message: 'Exam not found' });
+
+    res.json(updatedExam);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
 // Get All Exams
 exports.getAllExams = async (req, res) => {
   try {
@@ -94,9 +113,10 @@ exports.getQuestionsByExam = async (req, res) => {
   }
 };
 
+
 exports.getQuestionById = async (req, res) => {
   try {
-    const question = await Question.findById(req.params.questionId);
+    const question = await Question.findById(req.params.id);
     if (!question) return res.status(404).json({ message: 'Question not found' });
     res.json(question);
   } catch (error) {
@@ -112,5 +132,30 @@ exports.deleteQuestion = async (req, res) => {
     res.json({ message: 'Question deleted successfully' });
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+};
+
+// Update Question
+exports.updateQuestion = async (req, res) => {
+  try {
+    const { text, options, correctAnswerIndex, points } = req.body;
+
+    if (!text || !Array.isArray(options) || correctAnswerIndex === undefined) {
+      return res.status(400).json({ message: 'Missing required question fields' });
+    }
+
+    const question = await Question.findByIdAndUpdate(
+      req.params.id,
+      { text, options, correctAnswerIndex, points },
+      { new: true }
+    );
+
+    if (!question) {
+      return res.status(404).json({ message: 'Question not found' });
+    }
+
+    res.json(question);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
   }
 };

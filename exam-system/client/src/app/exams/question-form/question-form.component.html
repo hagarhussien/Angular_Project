@@ -15,6 +15,14 @@
         <textarea matInput [(ngModel)]="question.text" name="text" required></textarea>
       </mat-form-field>
 
+      <!-- Add this to your form -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Points</mat-label>
+        <input matInput type="number" [(ngModel)]="question.points" name="points" min="1" required>
+        <mat-icon matSuffix>grade</mat-icon>
+        <mat-hint>Points for this question</mat-hint>
+      </mat-form-field>
+
       <!-- Options -->
       <div class="options-section">
         <h3>Options</h3>
