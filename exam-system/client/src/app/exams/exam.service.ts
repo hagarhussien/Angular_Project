@@ -6,36 +6,41 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ExamService {
-
   private apiUrl = 'http://localhost:3000/api/exams';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-  getExams(): Observable<any> {
-    return this.http.get(this.apiUrl);
+  // Exam methods
+  getExams(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl);
   }
 
   getExam(id: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}/${id}`);
+    return this.http.get<any>(`${this.apiUrl}/${id}`);
   }
 
   createExam(exam: any): Observable<any> {
-    return this.http.post(this.apiUrl, exam);
+    return this.http.post<any>(this.apiUrl, exam);
   }
 
   updateExam(id: string, exam: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${id}`, exam);
+    return this.http.put<any>(`${this.apiUrl}/${id}`, exam);
   }
 
   deleteExam(id: string): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${id}`);
+    return this.http.delete<any>(`${this.apiUrl}/${id}`);
+  }
+
+  // Question methods
+  getQuestionsByExam(examId: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/${examId}/questions`);
   }
 
   addQuestion(examId: string, question: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/${examId}/questions`, question);
+    return this.http.post<any>(`${this.apiUrl}/${examId}/questions`, question);
   }
 
-  getQuestionsByExam(examId: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}/${examId}/questions`);
+  deleteQuestion(questionId: string): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/questions/${questionId}`);
   }
 }

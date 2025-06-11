@@ -1,45 +1,91 @@
-<h2>Manage Exams</h2>
-<a [routerLink]="'/exams/add'" mat-raised-button color="primary">+ Add New Exam</a>
+<!-- exam-list.component.html -->
+<mat-card class="list-card">
+  <mat-card-header>
+    <mat-card-title>
+      <mat-icon>list_alt</mat-icon>
+      Exam Management
+    </mat-card-title>
+    <mat-card-subtitle>Create and manage your exams</mat-card-subtitle>
+  </mat-card-header>
 
-<ng-container *ngIf="exams.length === 0; else examsTable">
-  <p>No exams found. Please add one.</p>
-</ng-container>
+  <mat-card-content>
+    <div class="header-actions">
+      <button mat-raised-button color="primary" [routerLink]="'/exams/add'">
+        <mat-icon>add</mat-icon> New Exam
+      </button>
+    </div>
 
-<ng-template #examsTable>
-  <table mat-table [dataSource]="exams" class="mat-elevation-z8">
-
-    <!-- Title Column -->
-    <ng-container matColumnDef="title">
-      <th mat-header-cell *matHeaderCellDef>Title</th>
-      <td mat-cell *matCellDef="let exam">{{ exam.title }}</td>
-    </ng-container>
-
-    <!-- Description Column -->
-    <ng-container matColumnDef="description">
-      <th mat-header-cell *matHeaderCellDef>Description</th>
-      <td mat-cell *matCellDef="let exam">{{ exam.description || '-' }}</td>
-    </ng-container>
-
-    <!-- Actions Column -->
-    <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef>Actions</th>
-      <td mat-cell *matCellDef="let exam">
-        <button mat-icon-button (click)="editExam(exam._id)">
-          <mat-icon>edit</mat-icon>
+    @if (isLoading) {
+      <div class="loading-spinner">
+        <mat-spinner diameter="50"></mat-spinner>
+      </div>
+    } @else if (exams.length === 0) {
+      <div class="empty-state">
+        <mat-icon class="empty-icon">assignment</mat-icon>
+        <h3>No Exams Found</h3>
+        <p>Create your first exam to get started</p>
+        <button mat-raised-button color="primary" [routerLink]="'/exams/add'">
+          <mat-icon>add</mat-icon> Create Exam
         </button>
-        <button mat-icon-button (click)="deleteExam(exam._id)">
-          <mat-icon>delete</mat-icon>
-        </button>
-        <button mat-icon-button (click)="viewQuestions(exam._id)">
-          <mat-icon>visibility</mat-icon>
-        </button>
-        <button mat-icon-button (click)="addQuestion(exam._id)">
-          <mat-icon>add_box</mat-icon>
-        </button>
-      </td>
-    </ng-container>
+      </div>
+    } @else {
+      <div class="table-container">
+        <table mat-table [dataSource]="exams" class="mat-elevation-z8">
+          <!-- Title Column -->
+          <ng-container matColumnDef="title">
+            <th mat-header-cell *matHeaderCellDef>Title</th>
+            <td mat-cell *matCellDef="let exam">
+              <div class="exam-title">
+                <mat-icon>assignment</mat-icon>
+                {{ exam.title }}
+              </div>
+            </td>
+          </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
-</ng-template>
+          <!-- Description Column -->
+          <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef>Description</th>
+            <td mat-cell *matCellDef="let exam">
+              {{ exam.description || 'No description' }}
+            </td>
+          </ng-container>
+
+          <!-- Duration Column -->
+          <ng-container matColumnDef="duration">
+            <th mat-header-cell *matHeaderCellDef>Duration</th>
+            <td mat-cell *matCellDef="let exam">
+              <div class="duration-cell">
+                <mat-icon>timer</mat-icon>
+                {{ exam.duration }} min
+              </div>
+            </td>
+          </ng-container>
+
+          <!-- Actions Column -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let exam">
+              <div class="action-buttons">
+                <button mat-icon-button color="primary" matTooltip="Edit" (click)="editExam(exam._id)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" matTooltip="Delete" (click)="deleteExam(exam._id)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+                <button mat-icon-button color="accent" matTooltip="View Questions" (click)="viewQuestions(exam._id)">
+                  <mat-icon>question_answer</mat-icon>
+                </button>
+                <button mat-icon-button color="primary" matTooltip="Add Question" (click)="addQuestion(exam._id)">
+                  <mat-icon>add_circle</mat-icon>
+                </button>
+              </div>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+    }
+  </mat-card-content>
+</mat-card>

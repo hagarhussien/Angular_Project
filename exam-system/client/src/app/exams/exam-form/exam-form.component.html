@@ -1,14 +1,45 @@
-<h2>{{ isEditMode ? 'Edit' : 'Add' }} Exam</h2>
-<form (ngSubmit)="saveExam()" #f="ngForm">
-  <label>Title:</label>
-  <input [(ngModel)]="exam.title" name="title" required><br>
+<!-- exam-form.component.html -->
+<mat-card class="form-card">
+  <mat-card-header>
+    <mat-card-title>
+      <mat-icon>assignment</mat-icon>
+      {{ isEditMode ? 'Edit Exam' : 'Create New Exam' }}
+    </mat-card-title>
+  </mat-card-header>
 
-  <label>Description:</label>
-  <textarea [(ngModel)]="exam.description" name="description"></textarea><br>
+  <mat-card-content>
+    <form (ngSubmit)="saveExam()" #f="ngForm" class="exam-form">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Title</mat-label>
+        <input matInput [(ngModel)]="exam.title" name="title" required>
+        <mat-icon matSuffix>title</mat-icon>
+        <mat-hint>Enter exam title</mat-hint>
+      </mat-form-field>
 
-  <label>Duration (minutes):</label>
-  <input type="number" [(ngModel)]="exam.duration" name="duration"><br><br>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Description</mat-label>
+        <textarea matInput [(ngModel)]="exam.description" name="description" rows="3"></textarea>
+        <mat-icon matSuffix>description</mat-icon>
+        <mat-hint>Optional exam description</mat-hint>
+      </mat-form-field>
 
-  <button type="submit">Save</button>
-  <button type="button" (click)="router.navigate(['/exams'])">Cancel</button>
-</form>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Duration (minutes)</mat-label>
+        <input matInput type="number" [(ngModel)]="exam.duration" name="duration" required min="1">
+        <mat-icon matSuffix>timer</mat-icon>
+        <mat-hint>Exam duration in minutes</mat-hint>
+      </mat-form-field>
+
+      <div class="form-actions">
+        <button mat-stroked-button type="button" (click)="router.navigate(['/exams'])">
+          <mat-icon>cancel</mat-icon> Cancel
+        </button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="f.invalid || isLoading">
+          <mat-icon *ngIf="!isLoading">{{ isEditMode ? 'save' : 'add' }}</mat-icon>
+          <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
+          {{ isEditMode ? 'Update' : 'Create' }}
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
