@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const examRoutes = require('./src/exams/exam.routes');
-
+const resultRoutes = require('./routes/resultRoutes');
 const app = express();
 
 app.use(cors());
@@ -16,7 +16,7 @@ mongoose.connect('mongodb://localhost:27017/examSystem')
 
 // Use exam routes
 app.use('/api/exams', examRoutes);
-
+app.use('/api/results', resultRoutes);
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

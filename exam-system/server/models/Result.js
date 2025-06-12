@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const resultSchema = new mongoose.Schema({
   studentId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type:String,
     ref: 'User',
     required: true
   },
@@ -21,7 +21,7 @@ const resultSchema = new mongoose.Schema({
   },
   answers: [
     {
-      questionId: { type: mongoose.Schema.Types.ObjectId, ref: 'Question' },
+      questionId: { type: mongoose.Schema.Types.ObjectId, ref: '../src/exams/question.model' },
       selectedOptionIndex: Number
     }
   ]

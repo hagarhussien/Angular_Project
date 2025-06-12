@@ -1,6 +1,6 @@
 const Result = require('../models/Result');
-const Question = require('../models/Question');
-const Exam = require('../models/Exam');
+const Question = require('../src/exams/question.model');
+const Exam = require('../src/exams/exam.model');
 
 const submitExam = async (req, res) => {
   try {
@@ -12,14 +12,15 @@ const submitExam = async (req, res) => {
     const questions = await Question.find({ examId });
 
     let score = 0;
-    const total = questions.length;
+    let total = 0;
 
     questions.forEach((q) => {
       const studentAnswer = answers.find(a => a.questionId === q._id.toString());
-      const correctOptionIndex = q.options.findIndex(opt => opt.isCorrect);
 
-      if (studentAnswer && studentAnswer.selectedOptionIndex === correctOptionIndex) {
-        score += 1;
+      total += q.points || 1;
+
+      if (studentAnswer && studentAnswer.selectedOptionIndex === q.correctAnswerIndex) {
+        score += q.points || 1; 
       }
     });
 
@@ -39,6 +40,7 @@ const submitExam = async (req, res) => {
     res.status(500).json({ message: 'Error submitting exam', error });
   }
 };
+
 
 const getResultsByStudent = async (req, res) => {
   try {
