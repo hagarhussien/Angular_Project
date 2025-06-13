@@ -1,0 +1,26 @@
+<h2>Welcome to Your Dashboard</h2>
+
+<section class="exam-section">
+  <h3>Available Exams</h3>
+  <div class="exam-grid">
+    @for(exam of exams; track exam._id) {
+      <div class="exam-card" (click)="startExam(exam._id)">
+        <h4>{{ exam.title }}</h4>
+        <p>{{ exam.description || 'No description' }}</p>
+        <small>Duration: {{ exam.duration }} min</small>
+      </div>
+    }
+  </div>
+</section>
+
+<section class="results-section">
+  <h3>Your Results</h3>
+  <table>
+    @for(result of results; track result._id) {
+      <tr>
+        <td>{{ result.examId.title }}</td>
+        <td>{{ result.score }} / {{ result.total }}</td>
+      </tr>
+    }
+  </table>
+</section>

@@ -84,7 +84,7 @@ export class ExamComponent implements OnInit {
     }));
 
     const result: ResultSubmit = {
-      studentId: '665a14...',
+      studentId: localStorage.getItem('studentId') || '',
       examId: this.examId,
       answers,
     };

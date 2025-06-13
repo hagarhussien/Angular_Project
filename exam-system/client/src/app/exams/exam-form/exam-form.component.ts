@@ -45,7 +45,7 @@ export class ExamFormComponent {
       this.isLoading = true;
       this.examService.getExam(id).subscribe({
         next: data => {
-          this.exam = data;
+          this.exam = data.exam;
           this.isLoading = false;
         },
         error: () => {

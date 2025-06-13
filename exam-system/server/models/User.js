@@ -18,7 +18,15 @@ const userSchema = new mongoose.Schema({
     type: String,
     enum: ['student', 'admin'],
     default: 'student'
+  },
+  isActive: {
+    type: Boolean,
+    default: true
   }
-}, { timestamps: true });
-
+}, { timestamps: true },{
+  versionKey: false
+});
+userSchema.methods.comparePassword = function(candidatePassword) {
+  return this.password === candidatePassword;
+};
 module.exports = mongoose.model('User', userSchema);

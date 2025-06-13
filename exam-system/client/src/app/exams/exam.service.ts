@@ -18,7 +18,7 @@ export class ExamService {
   }
 
   getExam(id: string): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/${id}`);
+    return this.http.get(`${this.apiUrl}/${id}`);
   }
 
   createExam(exam: any): Observable<any> {
